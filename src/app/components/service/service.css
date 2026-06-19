@@ -1,0 +1,43 @@
+.service-title-link {
+  text-decoration: none;
+}
+
+.service-title-link h3 {
+  transition: color 0.3s;
+}
+
+.service-title-link:hover h3 {
+  color: var(--accent-color);
+}
+
+.service-download {
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.service-btn-download {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--heading-font);
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  background: transparent;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+  white-space: nowrap;
+}
+
+.service-btn-download i {
+  font-size: 15px;
+  line-height: 0;
+}
+
+.service-btn-download:hover {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
