@@ -1,0 +1,26 @@
+<!-- Gallery Section -->
+<section id="gallery" class="gallery section">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Gallery</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div>
+
+  <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+    <div class="row g-0">
+
+      @for (item of items; track item.src) {
+        <div class="col-lg-3 col-md-4">
+          <div class="gallery-item">
+            <a [href]="item.src" class="glightbox" data-gallery="images-gallery">
+              <img [ngSrc]="item.src" [alt]="item.alt" class="img-fluid" width="1024" height="768">
+            </a>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+
+</section>
+<!-- /Gallery Section -->

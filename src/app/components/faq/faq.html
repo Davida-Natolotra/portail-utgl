@@ -1,0 +1,42 @@
+<!-- Faq Section -->
+<section id="faq" class="faq section">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Frequently Asked Questions</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+        <div class="faq-container">
+
+          @for (item of items; track $index) {
+            <div class="faq-item" [class.faq-active]="activeIndex() === $index">
+              <h3
+                role="button"
+                tabindex="0"
+                [attr.aria-expanded]="activeIndex() === $index"
+                [attr.aria-controls]="'faq-content-' + $index"
+                (click)="toggle($index)"
+                (keydown.enter)="toggle($index)"
+                (keydown.space)="toggle($index)"
+              >{{ item.question }}</h3>
+              <div class="faq-content" [id]="'faq-content-' + $index" role="region">
+                <p>{{ item.answer }}</p>
+              </div>
+              <i
+                class="faq-toggle bi bi-chevron-right"
+                aria-hidden="true"
+                (click)="toggle($index)"
+              ></i>
+            </div>
+          }
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- /Faq Section -->

@@ -1,0 +1,44 @@
+<!-- Pricing Section -->
+<section id="pricing" class="pricing section">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Pricing</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div>
+
+  <div class="container" data-aos="zoom-in" data-aos-delay="100">
+    <div class="row g-4">
+
+      @for (plan of plans; track plan.name) {
+        <div class="col-lg-4">
+          <div class="pricing-item" [class.featured]="plan.featured">
+            <h3>{{ plan.name }}</h3>
+            <div class="icon">
+              <i class="bi" [class]="plan.icon" aria-hidden="true"></i>
+            </div>
+            <h4><sup>$</sup>{{ plan.price }}<span> / month</span></h4>
+            <ul>
+              @for (feature of plan.features; track feature.text) {
+                <li [class.na]="!feature.included">
+                  <i
+                    class="bi"
+                    [class.bi-check]="feature.included"
+                    [class.bi-x]="!feature.included"
+                    aria-hidden="true"
+                  ></i>
+                  <span>{{ feature.text }}</span>
+                </li>
+              }
+            </ul>
+            <div class="text-center">
+              <a href="#" class="buy-btn">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+
+</section>
+<!-- /Pricing Section -->

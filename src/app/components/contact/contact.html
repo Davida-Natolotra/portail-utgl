@@ -1,0 +1,118 @@
+<!-- Contact Section -->
+<section id="contact" class="contact section">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Contact</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div>
+
+  <div class="container" data-aos="fade" data-aos-delay="100">
+    <div class="row gy-4">
+
+      <div class="col-lg-4">
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+          <i class="bi bi-geo-alt flex-shrink-0" aria-hidden="true"></i>
+          <div>
+            <h3>Address</h3>
+            <p>A108 Adam Street, New York, NY 535022</p>
+          </div>
+        </div>
+
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+          <i class="bi bi-telephone flex-shrink-0" aria-hidden="true"></i>
+          <div>
+            <h3>Call Us</h3>
+            <p><a href="tel:+15589554885">+1 5589 55488 55</a></p>
+          </div>
+        </div>
+
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+          <i class="bi bi-envelope flex-shrink-0" aria-hidden="true"></i>
+          <div>
+            <h3>Email Us</h3>
+            <p><a href="mailto:info@example.com">info&#64;example.com</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <form
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          class="php-email-form"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          novalidate
+        >
+          <div class="row gy-4">
+
+            <div class="col-md-6">
+              <label for="contact-name" class="visually-hidden">Your Name</label>
+              <input
+                id="contact-name"
+                type="text"
+                formControlName="name"
+                class="form-control"
+                placeholder="Your Name"
+                autocomplete="name"
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label for="contact-email" class="visually-hidden">Your Email</label>
+              <input
+                id="contact-email"
+                type="email"
+                formControlName="email"
+                class="form-control"
+                placeholder="Your Email"
+                autocomplete="email"
+              >
+            </div>
+
+            <div class="col-md-12">
+              <label for="contact-subject" class="visually-hidden">Subject</label>
+              <input
+                id="contact-subject"
+                type="text"
+                formControlName="subject"
+                class="form-control"
+                placeholder="Subject"
+              >
+            </div>
+
+            <div class="col-md-12">
+              <label for="contact-message" class="visually-hidden">Message</label>
+              <textarea
+                id="contact-message"
+                formControlName="message"
+                class="form-control"
+                rows="6"
+                placeholder="Message"
+              ></textarea>
+            </div>
+
+            <div class="col-md-12 text-center">
+              @if (status() === 'loading') {
+                <div class="loading" role="status" aria-live="polite">Loading</div>
+              }
+              @if (status() === 'error') {
+                <div class="error-message" role="alert">An error occurred. Please try again.</div>
+              }
+              @if (status() === 'success') {
+                <div class="sent-message" role="status" aria-live="polite">
+                  Your message has been sent. Thank you!
+                </div>
+              }
+              <button type="submit" [disabled]="status() === 'loading'">Send Message</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+<!-- /Contact Section -->

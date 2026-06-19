@@ -1,0 +1,30 @@
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div
+    class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
+  >
+    <a href="#hero" class="logo d-flex align-items-center">
+      <img ngSrc="assets/Logo_DPLMT.svg" alt="Portail UTGL Logo" width="50" height="50" />
+      <h1 class="sitename">Portail UTGL</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu" [attr.aria-expanded]="mobileNavActive()">
+      <ul role="list">
+        <li><a href="#hero" (click)="closeMobileNavIfActive()">Home</a></li>
+        <!-- <li><a href="#about" (click)="closeMobileNavIfActive()">About</a></li> -->
+        <li><a href="#services" (click)="closeMobileNavIfActive()">Solutions</a></li>
+        <!-- <li><a href="#team" (click)="closeMobileNavIfActive()">Team</a></li> -->
+        <!-- <li><a href="#contact" (click)="closeMobileNavIfActive()">Contact</a></li> -->
+      </ul>
+      <button
+        type="button"
+        class="mobile-nav-toggle d-xl-none bi"
+        [class.bi-list]="!mobileNavActive()"
+        [class.bi-x]="mobileNavActive()"
+        [attr.aria-expanded]="mobileNavActive()"
+        aria-controls="navmenu"
+        aria-label="Toggle navigation"
+        (click)="toggleMobileNav()"
+      ></button>
+    </nav>
+  </div>
+</header>

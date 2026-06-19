@@ -1,0 +1,36 @@
+<!-- Team Section -->
+<section id="team" class="team section">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Team</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      @for (member of members; track member.name) {
+        <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" [attr.data-aos-delay]="100 + ($index * 100)">
+          <div class="member">
+            <img [ngSrc]="member.photo" class="img-fluid" [alt]="member.name" width="400" height="400">
+            <div class="member-content">
+              <h4>{{ member.name }}</h4>
+              <span>{{ member.role }}</span>
+              <p>{{ member.bio }}</p>
+              <div class="social">
+                @for (link of member.social; track link.icon) {
+                  <a [href]="link.url" [attr.aria-label]="member.name + ' on ' + link.label">
+                    <i class="bi" [class]="link.icon" aria-hidden="true"></i>
+                  </a>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+
+</section>
+<!-- /Team Section -->
