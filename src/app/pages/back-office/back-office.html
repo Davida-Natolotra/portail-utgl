@@ -1,1 +1,368 @@
-<p>back-office works!</p>
+<div class="bo-layout">
+
+  <!-- Header -->
+  <header class="bo-header">
+    <div class="bo-header-inner">
+      <h1 class="bo-title">
+        <i class="bi bi-shield-lock" aria-hidden="true"></i>
+        Administration — Portail UTGL
+      </h1>
+      <a href="/" class="bo-home-link">
+        <i class="bi bi-arrow-left-circle" aria-hidden="true"></i>
+        Retour au site
+      </a>
+    </div>
+
+    <nav class="bo-tabs" role="tablist" aria-label="Sections">
+      <button role="tab" class="bo-tab" [class.bo-tab--active]="activeTab() === 'carousel'"
+        [attr.aria-selected]="activeTab() === 'carousel'" (click)="activeTab.set('carousel')">
+        <i class="bi bi-images" aria-hidden="true"></i> Carousel
+      </button>
+      <button role="tab" class="bo-tab" [class.bo-tab--active]="activeTab() === 'services'"
+        [attr.aria-selected]="activeTab() === 'services'" (click)="activeTab.set('services')">
+        <i class="bi bi-grid" aria-hidden="true"></i> Services
+      </button>
+      <button role="tab" class="bo-tab" [class.bo-tab--active]="activeTab() === 'cta'"
+        [attr.aria-selected]="activeTab() === 'cta'" (click)="activeTab.set('cta')">
+        <i class="bi bi-megaphone" aria-hidden="true"></i> CTA
+      </button>
+    </nav>
+  </header>
+
+  <!-- Global feedback -->
+  <div class="bo-feedback-bar" role="status" aria-live="polite">
+    @if (loading()) {
+      <div class="bo-alert bo-alert--info">
+        <span class="bo-spinner"></span> Chargement des données…
+      </div>
+    }
+    @if (errorMsg()) {
+      <div class="bo-alert bo-alert--error" role="alert">
+        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i> {{ errorMsg() }}
+      </div>
+    }
+    @if (successMsg()) {
+      <div class="bo-alert bo-alert--success">
+        <i class="bi bi-check-circle" aria-hidden="true"></i> {{ successMsg() }}
+      </div>
+    }
+  </div>
+
+  <main class="bo-main">
+
+    <!-- ══════════════════════════════ CAROUSEL ═══════════════════════════ -->
+    @if (activeTab() === 'carousel') {
+      <section class="bo-section">
+        <div class="bo-section-header">
+          <h2 class="bo-section-title">Slides du Carousel</h2>
+          @if (!editingSlide()) {
+            <button class="bo-btn bo-btn--primary" (click)="startEditSlide(null)">
+              <i class="bi bi-plus-lg" aria-hidden="true"></i> Ajouter
+            </button>
+          }
+        </div>
+
+        @if (editingSlide() !== null) {
+          <div class="bo-card bo-card--form">
+            <h3 class="bo-card-title">
+              {{ editingSlide()!.id ? 'Modifier le slide' : 'Nouveau slide' }}
+            </h3>
+            <form [formGroup]="slideForm" (ngSubmit)="saveSlide()" novalidate>
+              <div class="bo-form-row">
+                <div class="bo-form-col">
+                  <label class="bo-label" for="sl-title">Titre *</label>
+                  <input id="sl-title" type="text" class="bo-input" formControlName="title"
+                    [class.bo-input--error]="slideForm.controls.title.invalid && slideForm.controls.title.touched"
+                    placeholder="Bienvenue sur">
+                </div>
+                <div class="bo-form-col">
+                  <label class="bo-label" for="sl-highlight">Titre en couleur (optionnel)</label>
+                  <input id="sl-highlight" type="text" class="bo-input" formControlName="titleHighlight"
+                    placeholder="le portail UTGL">
+                </div>
+              </div>
+              <div class="bo-form-group">
+                <label class="bo-label" for="sl-body">Corps du texte *</label>
+                <textarea id="sl-body" class="bo-input bo-textarea" formControlName="body" rows="4"
+                  [class.bo-input--error]="slideForm.controls.body.invalid && slideForm.controls.body.touched"
+                  placeholder="Description du slide…"></textarea>
+              </div>
+              <div class="bo-form-row">
+                <div class="bo-form-col">
+                  <label class="bo-label" for="sl-cta-label">Libellé du bouton *</label>
+                  <input id="sl-cta-label" type="text" class="bo-input" formControlName="ctaLabel">
+                </div>
+                <div class="bo-form-col">
+                  <label class="bo-label" for="sl-cta-link">Lien du bouton *</label>
+                  <input id="sl-cta-link" type="text" class="bo-input" formControlName="ctaLink">
+                </div>
+                <div class="bo-form-col bo-form-col--sm">
+                  <label class="bo-label" for="sl-order">Ordre</label>
+                  <input id="sl-order" type="number" class="bo-input" formControlName="order" min="0">
+                </div>
+              </div>
+              <div class="bo-form-actions">
+                <button type="submit" class="bo-btn bo-btn--primary" [disabled]="saving()">
+                  @if (saving()) { <span class="bo-spinner"></span> } Sauvegarder
+                </button>
+                <button type="button" class="bo-btn bo-btn--ghost" (click)="cancelSlide()">Annuler</button>
+              </div>
+            </form>
+          </div>
+        }
+
+        @if (slides().length === 0 && !loading()) {
+          <p class="bo-empty">Aucun slide. Ajoutez-en un ci-dessus.</p>
+        }
+        @for (slide of slides(); track slide.id) {
+          <div class="bo-card bo-card--item">
+            <div class="bo-card-info">
+              <div class="bo-card-badge">{{ slide.order }}</div>
+              <div>
+                <p class="bo-card-name">
+                  {{ slide.title }} <span class="bo-highlight">{{ slide.titleHighlight }}</span>
+                </p>
+                <p class="bo-card-sub">{{ slide.ctaLabel }} → {{ slide.ctaLink }}</p>
+              </div>
+            </div>
+            <div class="bo-card-actions">
+              <button class="bo-btn bo-btn--sm bo-btn--outline" (click)="startEditSlide(slide)">
+                <i class="bi bi-pencil" aria-hidden="true"></i> Modifier
+              </button>
+              <button class="bo-btn bo-btn--sm bo-btn--danger" (click)="deleteSlide(slide.id)" [disabled]="saving()">
+                <i class="bi bi-trash" aria-hidden="true"></i> Supprimer
+              </button>
+            </div>
+          </div>
+        }
+      </section>
+    }
+
+    <!-- ══════════════════════════════ SERVICES ═══════════════════════════ -->
+    @if (activeTab() === 'services') {
+      <section class="bo-section">
+        <h2 class="bo-section-title">Services</h2>
+
+        <!-- Section meta -->
+        <div class="bo-card bo-card--form">
+          <h3 class="bo-card-title">Métadonnées de la section</h3>
+          <form [formGroup]="serviceMetaForm" (ngSubmit)="saveServiceMeta()" novalidate>
+            <div class="bo-form-row">
+              <div class="bo-form-col">
+                <label class="bo-label" for="meta-title">Titre *</label>
+                <input id="meta-title" type="text" class="bo-input" formControlName="title"
+                  [class.bo-input--error]="serviceMetaForm.controls.title.invalid && serviceMetaForm.controls.title.touched">
+              </div>
+              <div class="bo-form-col">
+                <label class="bo-label" for="meta-sub">Sous-titre</label>
+                <input id="meta-sub" type="text" class="bo-input" formControlName="subtitle">
+              </div>
+            </div>
+            <div class="bo-form-actions">
+              <button type="submit" class="bo-btn bo-btn--primary" [disabled]="saving()">
+                @if (saving()) { <span class="bo-spinner"></span> } Sauvegarder les métadonnées
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Items -->
+        <div class="bo-section-header">
+          <h3 class="bo-section-subtitle">Éléments</h3>
+          @if (!editingService()) {
+            <button class="bo-btn bo-btn--primary" (click)="startEditService(null)">
+              <i class="bi bi-plus-lg" aria-hidden="true"></i> Ajouter
+            </button>
+          }
+        </div>
+
+        @if (editingService() !== null) {
+          <div class="bo-card bo-card--form">
+            <h3 class="bo-card-title">
+              {{ editingService()!.id ? 'Modifier le service' : 'Nouveau service' }}
+            </h3>
+            <form [formGroup]="serviceForm" (ngSubmit)="saveService()" novalidate>
+              <div class="bo-form-row">
+                <div class="bo-form-col bo-form-col--sm">
+                  <label class="bo-label" for="svc-icon">Icône Bootstrap *</label>
+                  <input id="svc-icon" type="text" class="bo-input" formControlName="icon"
+                    placeholder="bi-activity">
+                  <p class="bo-hint">
+                    Aperçu : <i class="bi" [class]="serviceForm.controls.icon.value" aria-hidden="true"></i>
+                  </p>
+                </div>
+                <div class="bo-form-col">
+                  <label class="bo-label" for="svc-title">Titre *</label>
+                  <input id="svc-title" type="text" class="bo-input" formControlName="title"
+                    [class.bo-input--error]="serviceForm.controls.title.invalid && serviceForm.controls.title.touched">
+                </div>
+                <div class="bo-form-col bo-form-col--sm">
+                  <label class="bo-label" for="svc-order">Ordre</label>
+                  <input id="svc-order" type="number" class="bo-input" formControlName="order" min="0">
+                </div>
+              </div>
+              <div class="bo-form-group">
+                <label class="bo-label" for="svc-desc">Description *</label>
+                <textarea id="svc-desc" class="bo-input bo-textarea" formControlName="description" rows="3"
+                  [class.bo-input--error]="serviceForm.controls.description.invalid && serviceForm.controls.description.touched"></textarea>
+              </div>
+              <div class="bo-form-row">
+                <div class="bo-form-col">
+                  <label class="bo-label" for="svc-link">Lien de détail</label>
+                  <input id="svc-link" type="text" class="bo-input" formControlName="link">
+                </div>
+                <div class="bo-form-col bo-form-col--sm">
+                  <label class="bo-label" for="svc-dl-label">Libellé téléchargement</label>
+                  <input id="svc-dl-label" type="text" class="bo-input" formControlName="downloadLabel">
+                </div>
+              </div>
+
+              <!-- File upload -->
+              <div class="bo-form-group bo-form-group--file">
+                <label class="bo-label" for="svc-file">Fichier à télécharger</label>
+                @if (editingService()!.downloadUrl && editingService()!.downloadUrl !== '#') {
+                  <p class="bo-file-current">
+                    <i class="bi bi-file-earmark-check" aria-hidden="true"></i>
+                    Fichier actuel :
+                    <a [href]="editingService()!.downloadUrl" target="_blank" rel="noopener">Voir le fichier</a>
+                  </p>
+                }
+                <input id="svc-file" type="file" class="bo-file-input" (change)="onServiceFileChange($event)"
+                  accept=".pdf,.zip,.xlsx,.docx,.apk,.exe,.msi">
+                @if (serviceFile()) {
+                  <p class="bo-file-selected">
+                    <i class="bi bi-file-earmark-arrow-up" aria-hidden="true"></i>
+                    {{ serviceFile()!.name }}
+                  </p>
+                }
+                <p class="bo-hint">Remplace le fichier existant. Formats : PDF, ZIP, XLSX, DOCX, APK…</p>
+              </div>
+
+              <div class="bo-form-actions">
+                <button type="submit" class="bo-btn bo-btn--primary" [disabled]="saving()">
+                  @if (saving()) { <span class="bo-spinner"></span> } Sauvegarder
+                </button>
+                <button type="button" class="bo-btn bo-btn--ghost" (click)="cancelService()">Annuler</button>
+              </div>
+            </form>
+          </div>
+        }
+
+        @if (serviceItems().length === 0 && !loading()) {
+          <p class="bo-empty">Aucun service. Ajoutez-en un ci-dessus.</p>
+        }
+        @for (svc of serviceItems(); track svc.id) {
+          <div class="bo-card bo-card--item">
+            <div class="bo-card-info">
+              <div class="bo-card-icon">
+                <i class="bi" [class]="svc.icon" aria-hidden="true"></i>
+              </div>
+              <div>
+                <p class="bo-card-name">{{ svc.title }}</p>
+                <p class="bo-card-sub">{{ svc.description }}</p>
+                @if (svc.downloadUrl && svc.downloadUrl !== '#') {
+                  <span class="bo-file-badge">
+                    <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i>
+                    Fichier disponible
+                  </span>
+                } @else {
+                  <span class="bo-file-badge bo-file-badge--missing">
+                    <i class="bi bi-file-earmark-x" aria-hidden="true"></i>
+                    Aucun fichier
+                  </span>
+                }
+              </div>
+            </div>
+            <div class="bo-card-actions">
+              <button class="bo-btn bo-btn--sm bo-btn--outline" (click)="startEditService(svc)">
+                <i class="bi bi-pencil" aria-hidden="true"></i> Modifier
+              </button>
+              <button class="bo-btn bo-btn--sm bo-btn--danger" (click)="deleteService(svc)" [disabled]="saving()">
+                <i class="bi bi-trash" aria-hidden="true"></i> Supprimer
+              </button>
+            </div>
+          </div>
+        }
+      </section>
+    }
+
+    <!-- ═══════════════════════════════════ CTA ═══════════════════════════ -->
+    @if (activeTab() === 'cta') {
+      <section class="bo-section">
+        <h2 class="bo-section-title">Call To Action</h2>
+
+        <div class="bo-card bo-card--form">
+          <form [formGroup]="ctaForm" (ngSubmit)="saveCta()" novalidate>
+
+            <div class="bo-form-group">
+              <label class="bo-label" for="cta-title">Titre *</label>
+              <input id="cta-title" type="text" class="bo-input" formControlName="title"
+                [class.bo-input--error]="ctaForm.controls.title.invalid && ctaForm.controls.title.touched">
+            </div>
+            <div class="bo-form-group">
+              <label class="bo-label" for="cta-desc">Description *</label>
+              <textarea id="cta-desc" class="bo-input bo-textarea" formControlName="description" rows="4"
+                [class.bo-input--error]="ctaForm.controls.description.invalid && ctaForm.controls.description.touched"></textarea>
+            </div>
+            <div class="bo-form-group">
+              <label class="bo-label" for="cta-btn-label">Libellé du bouton *</label>
+              <input id="cta-btn-label" type="text" class="bo-input" formControlName="buttonLabel"
+                [class.bo-input--error]="ctaForm.controls.buttonLabel.invalid && ctaForm.controls.buttonLabel.touched">
+            </div>
+
+            <!-- Background image -->
+            <div class="bo-form-group bo-form-group--file">
+              <label class="bo-label" for="cta-bg">Image d'arrière-plan</label>
+              @if (ctaContent().backgroundStoragePath) {
+                <p class="bo-file-current">
+                  <i class="bi bi-image" aria-hidden="true"></i>
+                  Image en ligne (Firebase Storage)
+                </p>
+              } @else {
+                <p class="bo-file-current">Image locale par défaut</p>
+              }
+              <input id="cta-bg" type="file" class="bo-file-input" (change)="onCtaBgFileChange($event)"
+                accept="image/*">
+              @if (ctaBgFile()) {
+                <p class="bo-file-selected">
+                  <i class="bi bi-file-earmark-image" aria-hidden="true"></i>
+                  {{ ctaBgFile()!.name }}
+                </p>
+              }
+            </div>
+
+            <!-- Download file -->
+            <div class="bo-form-group bo-form-group--file">
+              <label class="bo-label" for="cta-dl">Fichier à télécharger (bouton CTA)</label>
+              @if (ctaContent().downloadStoragePath) {
+                <p class="bo-file-current">
+                  <i class="bi bi-file-earmark-check" aria-hidden="true"></i>
+                  Fichier actuel :
+                  <a [href]="ctaContent().buttonLink" target="_blank" rel="noopener">Voir le fichier</a>
+                </p>
+              } @else {
+                <p class="bo-file-current">Aucun fichier (bouton redirige vers #)</p>
+              }
+              <input id="cta-dl" type="file" class="bo-file-input" (change)="onCtaDownloadFileChange($event)"
+                accept=".pdf,.zip,.xlsx,.docx,.apk,.exe,.msi">
+              @if (ctaDownloadFile()) {
+                <p class="bo-file-selected">
+                  <i class="bi bi-file-earmark-arrow-up" aria-hidden="true"></i>
+                  {{ ctaDownloadFile()!.name }}
+                </p>
+              }
+              <p class="bo-hint">Ce fichier sera téléchargé en cliquant sur le bouton du CTA en page d'accueil.</p>
+            </div>
+
+            <div class="bo-form-actions">
+              <button type="submit" class="bo-btn bo-btn--primary" [disabled]="saving()">
+                @if (saving()) { <span class="bo-spinner"></span> } Sauvegarder le CTA
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    }
+
+  </main>
+</div>

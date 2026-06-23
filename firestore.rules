@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public read for front-office display
+    match /carousel-slides/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /service-items/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /sections/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

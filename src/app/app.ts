@@ -17,7 +17,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   private readonly document = inject(DOCUMENT);
-  protected readonly title = signal('Portail UTGL');
+  protected readonly title = signal('Portail UTGL — DPLMT');
 
   constructor() {
     this.document.title = this.title();

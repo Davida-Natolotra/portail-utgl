@@ -1,0 +1,424 @@
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+.bo-layout {
+  min-height: 100dvh;
+  background: #f4f6f9;
+  font-family: var(--default-font);
+  color: #212529;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.bo-header {
+  background: #065b5e;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bo-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.bo-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: var(--heading-font);
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bo-home-link {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.2s;
+}
+
+.bo-home-link:hover {
+  color: #fff;
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.bo-tabs {
+  display: flex;
+  padding: 0 2rem;
+  gap: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bo-tab {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.bo-tab:hover {
+  color: #fff;
+}
+
+.bo-tab--active {
+  color: #fff;
+  border-bottom-color: #1dc8cd;
+}
+
+/* ── Feedback bar ────────────────────────────────────────────────────────── */
+.bo-feedback-bar {
+  padding: 0 2rem;
+}
+
+.bo-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.bo-alert--info    { background: #e8f4fd; color: #0c5ca2; }
+.bo-alert--error   { background: #fde8e8; color: #c0392b; }
+.bo-alert--success { background: #e8fdf0; color: #1e7e34; }
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+.bo-main {
+  padding: 1.5rem 2rem 3rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────── */
+.bo-section {
+  animation: bo-fade-in 0.2s ease;
+}
+
+@keyframes bo-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bo-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.bo-section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #065b5e;
+  font-family: var(--heading-font);
+  margin: 1.25rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #1dc8cd;
+}
+
+.bo-section-subtitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #065b5e;
+  margin: 0;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+.bo-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
+
+.bo-card--form {
+  padding: 1.5rem;
+}
+
+.bo-card--item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  gap: 1rem;
+}
+
+.bo-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #065b5e;
+  margin: 0 0 1.25rem;
+  font-family: var(--heading-font);
+}
+
+.bo-card-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.bo-card-badge {
+  width: 2rem;
+  height: 2rem;
+  background: #1dc8cd;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.bo-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #e8f9fa;
+  color: #1dc8cd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.bo-card-name {
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bo-card-sub {
+  font-size: 0.83rem;
+  color: #6c757d;
+  margin: 0 0 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bo-highlight {
+  color: #1dc8cd;
+  font-weight: 400;
+}
+
+.bo-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ── Forms ───────────────────────────────────────────────────────────────── */
+.bo-form-group {
+  margin-bottom: 1rem;
+}
+
+.bo-form-group--file {
+  background: #f8f9fa;
+  border: 1px dashed #ced4da;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.bo-form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.bo-form-col {
+  flex: 1;
+  min-width: 180px;
+}
+
+.bo-form-col--sm {
+  flex: 0 0 120px;
+  min-width: 100px;
+}
+
+.bo-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.35rem;
+}
+
+.bo-input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background: #fff;
+  color: #212529;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.bo-input:focus {
+  border-color: #1dc8cd;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 200, 205, 0.15);
+}
+
+.bo-input--error {
+  border-color: #dc3545;
+}
+
+.bo-textarea {
+  resize: vertical;
+}
+
+.bo-file-input {
+  display: block;
+  width: 100%;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.bo-file-current {
+  font-size: 0.83rem;
+  color: #6c757d;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.bo-file-current a {
+  color: #1dc8cd;
+}
+
+.bo-file-selected {
+  font-size: 0.83rem;
+  color: #1e7e34;
+  margin: 0.4rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.bo-file-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  background: #e8fdf0;
+  color: #1e7e34;
+}
+
+.bo-file-badge--missing {
+  background: #fde8e8;
+  color: #c0392b;
+}
+
+.bo-hint {
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin: 0.4rem 0 0;
+}
+
+.bo-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.bo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--heading-font);
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.bo-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bo-btn--primary  { background: #1dc8cd; color: #fff; }
+.bo-btn--primary:hover:not(:disabled) { background: #17a8ac; }
+
+.bo-btn--outline  { background: transparent; color: #065b5e; border: 1px solid #065b5e; }
+.bo-btn--outline:hover:not(:disabled) { background: #e8f9fa; }
+
+.bo-btn--ghost    { background: transparent; color: #6c757d; border: 1px solid #dee2e6; }
+.bo-btn--ghost:hover:not(:disabled) { background: #f8f9fa; }
+
+.bo-btn--danger   { background: transparent; color: #dc3545; border: 1px solid #dc3545; }
+.bo-btn--danger:hover:not(:disabled) { background: #dc3545; color: #fff; }
+
+.bo-btn--sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+.bo-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: bo-spin 0.7s linear infinite;
+}
+
+@keyframes bo-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.bo-empty {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .bo-header-inner { padding: 0.75rem 1rem; }
+  .bo-tabs { padding: 0 1rem; }
+  .bo-main { padding: 1rem; }
+  .bo-form-row { flex-direction: column; }
+  .bo-form-col--sm { flex: 1; }
+  .bo-card--item { flex-direction: column; align-items: flex-start; }
+}

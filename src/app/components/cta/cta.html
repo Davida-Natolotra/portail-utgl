@@ -14,7 +14,11 @@
         <div class="text-center">
           <h3>{{ content().title }}</h3>
           <p>{{ content().description }}</p>
-          <a class="cta-btn" [href]="content().buttonLink">{{ content().buttonLabel }}</a>
+          <a
+            class="cta-btn"
+            [href]="content().buttonLink"
+            [attr.download]="content().buttonLink !== '#' ? '' : null"
+          >{{ content().buttonLabel }}</a>
         </div>
       </div>
     </div>
