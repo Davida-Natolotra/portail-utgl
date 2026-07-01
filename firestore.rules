@@ -4,15 +4,15 @@ service cloud.firestore {
     // Public read for front-office display
     match /carousel-slides/{docId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if true;
     }
     match /service-items/{docId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if true;
     }
     match /sections/{docId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if true;
     }
   }
 }
